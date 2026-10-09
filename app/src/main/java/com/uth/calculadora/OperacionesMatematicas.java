@@ -1,16 +1,30 @@
 package com.uth.calculadora;
 
-/** Encapsula los dos operandos recibidos mediante el constructor. */
+/** Guarda los números con setters y permite consultarlos con getters. */
 public final class OperacionesMatematicas {
-    private final double primero;
-    private final double segundo;
+    private double primero;
+    private double segundo;
 
-    public OperacionesMatematicas(double primero, double segundo) {
-        if (!Double.isFinite(primero) || !Double.isFinite(segundo)) {
+    public void setPrimero(double primero) {
+        if (!Double.isFinite(primero)) {
             throw new IllegalArgumentException("Ingresa números finitos.");
         }
         this.primero = primero;
+    }
+
+    public double getPrimero() {
+        return primero;
+    }
+
+    public void setSegundo(double segundo) {
+        if (!Double.isFinite(segundo)) {
+            throw new IllegalArgumentException("Ingresa números finitos.");
+        }
         this.segundo = segundo;
+    }
+
+    public double getSegundo() {
+        return segundo;
     }
 
     public double sumar() { return validarResultado(primero + segundo); }

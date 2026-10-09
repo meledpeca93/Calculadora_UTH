@@ -4,13 +4,13 @@ Aplicación Android en Java para sumar, restar, multiplicar y dividir dos númer
 
 ## Estructura
 
-- `OperacionesMatematicas`: recibe los operandos por constructor y encapsula las cuatro operaciones. Rechaza división entre cero y resultados fuera de rango.
+- `OperacionesMatematicas`: guarda los operandos con `setPrimero()` y `setSegundo()`, permite consultarlos con `getPrimero()` y `getSegundo()` y encapsula las cuatro operaciones. Rechaza división entre cero y resultados fuera de rango.
 - `EntradaNumerica`: valida campos vacíos, números negativos, punto o coma decimal y límites numéricos.
 - `MainActivity`: obtiene los números de los EditText, atiende los cuatro botones y envía los operandos, operación y resultado mediante un Intent.
 - `ResultadoActivity`: muestra la operación y el resultado; permite regresar sin perder los números.
 - Las interfaces se definen en XML y se adaptan mediante desplazamiento al teclado y a pantallas pequeñas.
 
-El constructor transmite los operandos al objeto matemático. La comunicación entre actividades se realiza mediante Intent; Android administra el ciclo de vida de las actividades.
+Los setters entregan los operandos al objeto matemático y los getters permiten recuperarlos. La comunicación entre actividades se realiza mediante Intent; Android administra el ciclo de vida de las actividades.
 
 ## Ejecutar
 

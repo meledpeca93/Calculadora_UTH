@@ -14,9 +14,13 @@ public class ResultadoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Pantalla.preparar(this, R.layout.activity_resultado);
+
         if (!getIntent().hasExtra(EXTRA_RESULTADO) || !getIntent().hasExtra(EXTRA_PRIMERO)
                 || !getIntent().hasExtra(EXTRA_SEGUNDO)) { finish(); return; }
+
+
         String operacion = getIntent().getStringExtra(EXTRA_OPERACION);
+
         String simbolo;
         int titulo;
         if ("suma".equals(operacion)) { simbolo = "+"; titulo = R.string.suma; }
@@ -24,12 +28,15 @@ public class ResultadoActivity extends AppCompatActivity {
         else if ("multiplicacion".equals(operacion)) { simbolo = "×"; titulo = R.string.multiplicacion; }
         else if ("division".equals(operacion)) { simbolo = "÷"; titulo = R.string.division; }
         else { finish(); return; }
+
         double primero = getIntent().getDoubleExtra(EXTRA_PRIMERO, 0);
         double segundo = getIntent().getDoubleExtra(EXTRA_SEGUNDO, 0);
         double resultado = getIntent().getDoubleExtra(EXTRA_RESULTADO, 0);
+
         if (!Double.isFinite(primero) || !Double.isFinite(segundo) || !Double.isFinite(resultado)) {
             finish(); return;
         }
+
         ((TextView) findViewById(R.id.nombre_operacion)).setText(titulo);
         ((TextView) findViewById(R.id.expresion)).setText(getString(R.string.expresion,
                 FormatoNumero.formatear(primero), simbolo, FormatoNumero.formatear(segundo)));

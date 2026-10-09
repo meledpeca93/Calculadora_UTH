@@ -4,29 +4,48 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class OperacionesMatematicasTest {
+    private OperacionesMatematicas crearOperacion(double primero, double segundo) {
+        OperacionesMatematicas operacion = new OperacionesMatematicas();
+        operacion.setPrimero(primero);
+        operacion.setSegundo(segundo);
+        return operacion;
+    }
+
+    @Test public void settersActualizanLosOperandos() {
+        OperacionesMatematicas op = crearOperacion(8, 2);
+        assertEquals(8, op.getPrimero(), 0);
+        assertEquals(2, op.getSegundo(), 0);
+        assertEquals(10, op.sumar(), 0);
+        op.setPrimero(12);
+        op.setSegundo(3);
+        assertEquals(12, op.getPrimero(), 0);
+        assertEquals(3, op.getSegundo(), 0);
+        assertEquals(4, op.dividir(), 0);
+    }
+
     @Test public void operacionesConNegativosYDecimales() {
-        OperacionesMatematicas op = new OperacionesMatematicas(-7.5, 2.5);
+        OperacionesMatematicas op = crearOperacion(-7.5, 2.5);
         assertEquals(-5, op.sumar(), 0);
         assertEquals(-10, op.restar(), 0);
         assertEquals(-18.75, op.multiplicar(), 0);
         assertEquals(-3, op.dividir(), 0);
     }
     @Test public void ceroPuedeSerNumerador() {
-        assertEquals(0, new OperacionesMatematicas(0, 5).dividir(), 0);
+        assertEquals(0, crearOperacion(0, 5).dividir(), 0);
     }
     @Test public void rechazaAmbosSignosDeCeroComoDivisor() {
         for (double cero : new double[]{0.0, -0.0}) {
             assertThrows(ArithmeticException.class,
-                    () -> new OperacionesMatematicas(7, cero).dividir());
+                    () -> crearOperacion(7, cero).dividir());
         }
     }
     @Test public void rechazaDesbordamientoYOperandosNoFinitos() {
         assertThrows(ArithmeticException.class,
-                () -> new OperacionesMatematicas(Double.MAX_VALUE, 2).multiplicar());
+                () -> crearOperacion(Double.MAX_VALUE, 2).multiplicar());
         assertThrows(IllegalArgumentException.class,
-                () -> new OperacionesMatematicas(Double.NaN, 1));
+                () -> crearOperacion(Double.NaN, 1));
         assertThrows(IllegalArgumentException.class,
-                () -> new OperacionesMatematicas(1, Double.POSITIVE_INFINITY));
+                () -> crearOperacion(1, Double.POSITIVE_INFINITY));
     }
     @Test public void aceptaSeparadoresDecimalesYEspacios() {
         assertEquals(-2.5, EntradaNumerica.convertir(" -2,5 "), 0);

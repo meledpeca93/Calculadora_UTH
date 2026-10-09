@@ -34,14 +34,20 @@ public class MainActivity extends AppCompatActivity {
     private void calcular(String operacion) {
         primerNumero.setError(null);
         segundoNumero.setError(null);
+
         Double primero = leer(primerNumero);
         Double segundo = leer(segundoNumero);
+
         if (primero == null || segundo == null) {
             (primero == null ? primerNumero : segundoNumero).requestFocus();
             return;
         }
-        // El constructor entrega los operandos a la clase; el Intent comunica las actividades.
-        OperacionesMatematicas matematicas = new OperacionesMatematicas(primero, segundo);
+
+        // Los setters guardan los números en el objeto.
+        OperacionesMatematicas matematicas = new OperacionesMatematicas();
+        matematicas.setPrimero(primero);
+        matematicas.setSegundo(segundo);
+
         try {
             double resultado;
             switch (operacion) {
@@ -51,11 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 case "division": resultado = matematicas.dividir(); break;
                 default: throw new IllegalArgumentException("Operación desconocida.");
             }
+
             Intent intent = new Intent(this, ResultadoActivity.class);
-            intent.putExtra(ResultadoActivity.EXTRA_PRIMERO, primero.doubleValue());
-            intent.putExtra(ResultadoActivity.EXTRA_SEGUNDO, segundo.doubleValue());
+
+            // Los getters recuperan los números para enviarlos a la otra pantalla.
+            intent.putExtra(ResultadoActivity.EXTRA_PRIMERO, matematicas.getPrimero());
+            intent.putExtra(ResultadoActivity.EXTRA_SEGUNDO, matematicas.getSegundo());
             intent.putExtra(ResultadoActivity.EXTRA_RESULTADO, resultado);
             intent.putExtra(ResultadoActivity.EXTRA_OPERACION, operacion);
+
             startActivity(intent);
         } catch (ArithmeticException e) {
             if ("division".equals(operacion) && segundo == 0) {

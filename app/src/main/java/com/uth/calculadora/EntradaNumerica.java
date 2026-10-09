@@ -4,8 +4,10 @@ public final class EntradaNumerica {
     private EntradaNumerica() { }
 
     public static double convertir(String entrada) {
+
         String valor = entrada.trim();
         if (valor.isEmpty()) throw new IllegalArgumentException("Ingresa un número.");
+
         if (!valor.matches("[+-]?(?:[0-9]+(?:[.,][0-9]*)?|[.,][0-9]+)")) {
             throw new IllegalArgumentException("Ingresa un número válido; usa punto o coma decimal.");
         }
